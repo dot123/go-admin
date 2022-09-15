@@ -1,0 +1,2630 @@
+basePath: /api/v1
+definitions:
+  ginx.ResponseData:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+  ginx.ResponseFail:
+    properties:
+      code:
+        type: integer
+      msg:
+        type: string
+    type: object
+  monitor.Cpu:
+    properties:
+      cores:
+        type: integer
+      cpus:
+        items:
+          type: number
+        type: array
+    type: object
+  monitor.Disk:
+    properties:
+      totalGb:
+        type: integer
+      totalMb:
+        type: integer
+      usedGb:
+        type: integer
+      usedMb:
+        type: integer
+      usedPercent:
+        type: integer
+    type: object
+  monitor.Os:
+    properties:
+      compiler:
+        type: string
+      goVersion:
+        type: string
+      goos:
+        type: string
+      numCpu:
+        type: integer
+      numGoroutine:
+        type: integer
+    type: object
+  monitor.Rrm:
+    properties:
+      totalMb:
+        type: integer
+      usedMb:
+        type: integer
+      usedPercent:
+        type: integer
+    type: object
+  monitor.Server:
+    properties:
+      cpu:
+        $ref: '#/definitions/monitor.Cpu'
+      disk:
+        $ref: '#/definitions/monitor.Disk'
+      os:
+        $ref: '#/definitions/monitor.Os'
+      ram:
+        $ref: '#/definitions/monitor.Rrm'
+    type: object
+  schema.DeptLabel:
+    properties:
+      children:
+        items:
+          $ref: '#/definitions/schema.DeptLabel'
+        type: array
+      id:
+        type: integer
+      label:
+        type: string
+    type: object
+  schema.GetDeptTreeRoleSelectResp:
+    properties:
+      checkedKeys:
+        items:
+          type: integer
+        type: array
+      depts:
+        items:
+          $ref: '#/definitions/schema.DeptLabel'
+        type: array
+    type: object
+  schema.GetMenuTreeSelectResp:
+    properties:
+      checkedKeys:
+        items:
+          type: integer
+        type: array
+      menus:
+        items:
+          $ref: '#/definitions/schema.MenuLabel'
+        type: array
+    type: object
+  schema.GetProfileResp:
+    properties:
+      posts:
+        items:
+          $ref: '#/definitions/schema.SysPost'
+        type: array
+      roles:
+        items:
+          $ref: '#/definitions/schema.SysRole'
+        type: array
+      user:
+        $ref: '#/definitions/schema.SysUser'
+    type: object
+  schema.LoginParam:
+    properties:
+      code:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+      uuid:
+        type: string
+    required:
+    - code
+    - password
+    - username
+    - uuid
+    type: object
+  schema.LoginTokenInfo:
+    properties:
+      access_expire:
+        description: 过期时间戳
+        type: integer
+      access_token:
+        description: 访问令牌
+        type: string
+      refresh_after:
+        description: 刷新时间戳
+        type: integer
+    type: object
+  schema.MenuLabel:
+    properties:
+      children:
+        items:
+          $ref: '#/definitions/schema.MenuLabel'
+        type: array
+      id:
+        type: integer
+      label:
+        type: string
+    type: object
+  schema.Notice:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      endTime:
+        type: string
+      id:
+        type: integer
+      operator:
+        type: string
+      startTime:
+        type: string
+      title:
+        type: string
+    type: object
+  schema.NoticeCreateReq:
+    properties:
+      content:
+        minLength: 2
+        type: string
+      endTime:
+        type: string
+      operator:
+        maxLength: 150
+        minLength: 2
+        type: string
+      startTime:
+        type: string
+      title:
+        maxLength: 150
+        minLength: 2
+        type: string
+    required:
+    - content
+    - endTime
+    - operator
+    - startTime
+    - title
+    type: object
+  schema.NoticeGetPageResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/schema.Notice'
+        type: array
+      total:
+        type: integer
+    type: object
+  schema.NoticeUpdateReq:
+    properties:
+      content:
+        minLength: 2
+        type: string
+      endTime:
+        type: string
+      id:
+        type: integer
+      operator:
+        maxLength: 150
+        minLength: 2
+        type: string
+      startTime:
+        type: string
+      title:
+        maxLength: 150
+        minLength: 2
+        type: string
+    required:
+    - content
+    - endTime
+    - id
+    - operator
+    - startTime
+    - title
+    type: object
+  schema.PassWord:
+    properties:
+      newPassword:
+        type: string
+      oldPassword:
+        type: string
+    required:
+    - newPassword
+    - oldPassword
+    type: object
+  schema.ResetSysUserPwdReq:
+    properties:
+      password:
+        type: string
+      updateBy:
+        type: integer
+      userId:
+        type: integer
+    type: object
+  schema.RoleDataScopeReq:
+    properties:
+      dataScope:
+        type: string
+      deptIds:
+        items:
+          type: integer
+        type: array
+      id:
+        description: 角色编码
+        type: integer
+      updateBy:
+        description: 更新者
+        type: integer
+    required:
+    - dataScope
+    - id
+    type: object
+  schema.SysApi:
+    properties:
+      action:
+        description: 请求类型
+        type: string
+      createBy:
+        description: 创建者
+        type: integer
+      createdAt:
+        description: 创建时间
+        type: string
+      deletedAt:
+        description: 删除时间
+        type: string
+      handle:
+        description: handle
+        type: string
+      id:
+        description: 主键编码
+        type: integer
+      path:
+        description: 地址
+        type: string
+      title:
+        description: 标题
+        type: string
+      type:
+        description: 接口类型
+        type: string
+      updateBy:
+        description: 更新者
+        type: integer
+      updatedAt:
+        description: 最后更新时间
+        type: string
+    type: object
+  schema.SysApiDeleteReq:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  schema.SysApiGetPageResp:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schema.SysApi'
+        type: array
+      total:
+        type: integer
+    type: object
+  schema.SysApiUpdateReq:
+    properties:
+      action:
+        type: string
+      handle:
+        type: string
+      id:
+        type: integer
+      path:
+        type: string
+      title:
+        type: string
+      type:
+        type: string
+      updateBy:
+        type: integer
+    type: object
+  schema.SysDept:
+    properties:
+      children:
+        items:
+          $ref: '#/definitions/schema.SysDept'
+        type: array
+      createBy:
+        description: 创建者
+        type: integer
+      createdAt:
+        description: 创建时间
+        type: string
+      dataScope:
+        type: string
+      deptId:
+        description: 部门编码
+        type: integer
+      deptName:
+        description: 部门名称
+        type: string
+      deptPath:
+        type: string
+      email:
+        description: 邮箱
+        type: string
+      leader:
+        description: 负责人
+        type: string
+      params:
+        type: string
+      parentId:
+        description: 上级部门
+        type: integer
+      phone:
+        description: 手机
+        type: string
+      sort:
+        description: 排序
+        type: integer
+      status:
+        description: 状态
+        type: integer
+      updateBy:
+        description: 更新者
+        type: integer
+      updatedAt:
+        description: 最后更新时间
+        type: string
+    type: object
+  schema.SysDeptDeleteReq:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  schema.SysDeptInsertReq:
+    properties:
+      createBy:
+        description: 创建者
+        type: integer
+      deptName:
+        description: 部门名称
+        type: string
+      deptPath:
+        description: 路径
+        type: string
+      email:
+        description: 邮箱
+        type: string
+      leader:
+        description: 负责人
+        type: string
+      parentId:
+        description: 上级部门
+        type: integer
+      phone:
+        description: 手机
+        type: string
+      sort:
+        description: 排序
+        type: integer
+      status:
+        default: 2
+        description: 状态
+        type: integer
+    required:
+    - deptName
+    - email
+    - leader
+    - parentId
+    - phone
+    - sort
+    - status
+    type: object
+  schema.SysDeptUpdateReq:
+    properties:
+      deptId:
+        description: 编码
+        type: integer
+      deptName:
+        description: 部门名称
+        type: string
+      deptPath:
+        description: 路径
+        type: string
+      email:
+        description: 邮箱
+        type: string
+      leader:
+        description: 负责人
+        type: string
+      parentId:
+        description: 上级部门
+        type: integer
+      phone:
+        description: 手机
+        type: string
+      sort:
+        description: 排序
+        type: integer
+      status:
+        default: 2
+        description: 状态
+        type: integer
+      updateBy:
+        description: 更新者
+        type: integer
+    required:
+    - deptName
+    - email
+    - leader
+    - parentId
+    - phone
+    - sort
+    - status
+    type: object
+  schema.SysMenu:
+    properties:
+      action:
+        type: string
+      apis:
+        items:
+          type: integer
+        type: array
+      breadcrumb:
+        type: integer
+      children:
+        items:
+          $ref: '#/definitions/schema.SysMenu'
+        type: array
+      component:
+        type: string
+      createBy:
+        description: 创建者
+        type: integer
+      createdAt:
+        description: 创建时间
+        type: string
+      dataScope:
+        type: string
+      icon:
+        type: string
+      is_select:
+        type: boolean
+      isFrame:
+        type: integer
+      menuId:
+        type: integer
+      menuName:
+        type: string
+      menuType:
+        type: string
+      noCache:
+        type: integer
+      params:
+        type: string
+      parentId:
+        type: integer
+      path:
+        type: string
+      paths:
+        type: string
+      permission:
+        type: string
+      roleId:
+        type: integer
+      sort:
+        type: integer
+      sysApi:
+        items:
+          $ref: '#/definitions/schema.SysApi'
+        type: array
+      title:
+        type: string
+      updateBy:
+        description: 更新者
+        type: integer
+      updatedAt:
+        description: 最后更新时间
+        type: string
+      visible:
+        type: integer
+    type: object
+  schema.SysMenuDeleteReq:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  schema.SysMenuInsertReq:
+    properties:
+      action:
+        description: 请求方式
+        type: string
+      breadcrumb:
+        description: 是否面包屑
+        type: integer
+      component:
+        description: 组件
+        type: string
+      createBy:
+        type: integer
+      icon:
+        description: 图标
+        type: string
+      isFrame:
+        description: 是否frame
+        type: integer
+      menuName:
+        description: 菜单name
+        type: string
+      menuType:
+        description: 菜单类型
+        type: string
+      noCache:
+        description: 是否缓存
+        type: integer
+      parentId:
+        description: 上级菜单
+        type: integer
+      path:
+        description: 路径
+        type: string
+      paths:
+        description: id路径
+        type: string
+      permission:
+        description: 权限编码
+        type: string
+      sort:
+        description: 排序
+        type: integer
+      title:
+        description: 显示名称
+        type: string
+      visible:
+        description: 是否显示
+        type: integer
+    type: object
+  schema.SysMenuUpdateReq:
+    properties:
+      action:
+        description: 请求方式
+        type: string
+      apis:
+        items:
+          type: integer
+        type: array
+      breadcrumb:
+        description: 是否面包屑
+        type: integer
+      component:
+        description: 组件
+        type: string
+      icon:
+        description: 图标
+        type: string
+      id:
+        description: 编码
+        type: integer
+      isFrame:
+        description: 是否frame
+        type: string
+      menuName:
+        description: 菜单name
+        type: string
+      menuType:
+        description: 菜单类型
+        type: string
+      noCache:
+        description: 是否缓存
+        type: integer
+      parentId:
+        description: 上级菜单
+        type: integer
+      path:
+        description: 路径
+        type: string
+      paths:
+        description: id路径
+        type: string
+      permission:
+        description: 权限编码
+        type: string
+      sort:
+        description: 排序
+        type: integer
+      title:
+        description: 显示名称
+        type: string
+      updateBy:
+        type: integer
+      visible:
+        description: 是否显示
+        type: integer
+    type: object
+  schema.SysPost:
+    properties:
+      createBy:
+        description: 创建者
+        type: integer
+      dataScope:
+        type: string
+      params:
+        type: string
+      postCode:
+        description: 岗位代码
+        type: string
+      postId:
+        description: 岗位编号
+        type: integer
+      postName:
+        description: 岗位名称
+        type: string
+      remark:
+        description: 描述
+        type: string
+      sort:
+        description: 岗位排序
+        type: integer
+      status:
+        description: 状态
+        type: integer
+      updateBy:
+        description: 更新者
+        type: integer
+    type: object
+  schema.SysPostDeleteReq:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  schema.SysPostInsertReq:
+    properties:
+      createBy:
+        description: 创建者
+        type: integer
+      postCode:
+        type: string
+      postName:
+        type: string
+      remark:
+        type: string
+      sort:
+        type: integer
+      status:
+        type: integer
+    type: object
+  schema.SysPostPageResp:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schema.SysPost'
+        type: array
+      total:
+        type: integer
+    type: object
+  schema.SysPostUpdateReq:
+    properties:
+      id:
+        type: integer
+      postCode:
+        type: string
+      postName:
+        type: string
+      remark:
+        type: string
+      sort:
+        type: integer
+      status:
+        type: integer
+      updateBy:
+        description: 更新者
+        type: integer
+    type: object
+  schema.SysRole:
+    properties:
+      admin:
+        type: integer
+      createBy:
+        description: 创建者
+        type: integer
+      createdAt:
+        description: 创建时间
+        type: string
+      dataScope:
+        type: string
+      flag:
+        type: string
+      menuIds:
+        items:
+          type: integer
+        type: array
+      params:
+        type: string
+      remark:
+        description: 备注
+        type: string
+      roleId:
+        description: 角色编码
+        type: integer
+      roleKey:
+        description: 角色代码
+        type: string
+      roleName:
+        description: 角色名称
+        type: string
+      roleSort:
+        description: 角色排序
+        type: integer
+      status:
+        type: integer
+      sysMenu:
+        items:
+          $ref: '#/definitions/schema.SysMenu'
+        type: array
+      updateBy:
+        description: 更新者
+        type: integer
+      updatedAt:
+        description: 最后更新时间
+        type: string
+    type: object
+  schema.SysRoleGetPageResp:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schema.SysRole'
+        type: array
+      total:
+        type: integer
+    type: object
+  schema.SysRoleInsertReq:
+    properties:
+      admin:
+        type: integer
+      createBy:
+        description: 创建者
+        type: integer
+      dataScope:
+        type: string
+      flag:
+        description: 标记
+        type: string
+      menuIds:
+        items:
+          type: integer
+        type: array
+      remark:
+        description: 备注
+        type: string
+      roleKey:
+        description: 角色代码
+        type: string
+      roleName:
+        description: 角色名称
+        type: string
+      roleSort:
+        description: 角色排序
+        type: integer
+      status:
+        description: 状态
+        type: integer
+    type: object
+  schema.SysRoleUpdateReq:
+    properties:
+      admin:
+        type: integer
+      dataScope:
+        type: string
+      flag:
+        description: 标记
+        type: string
+      id:
+        description: 角色编码
+        type: integer
+      menuIds:
+        items:
+          type: integer
+        type: array
+      remark:
+        description: 备注
+        type: string
+      roleKey:
+        description: 角色代码
+        type: string
+      roleName:
+        description: 角色名称
+        type: string
+      roleSort:
+        description: 角色排序
+        type: integer
+      status:
+        description: 状态
+        type: integer
+      updateBy:
+        description: 更新者
+        type: integer
+    type: object
+  schema.SysUser:
+    properties:
+      avatar:
+        type: string
+      createBy:
+        description: 创建者
+        type: integer
+      createdAt:
+        description: 创建时间
+        type: string
+      dept:
+        $ref: '#/definitions/schema.SysDept'
+      deptId:
+        type: integer
+      deptIds:
+        items:
+          type: integer
+        type: array
+      email:
+        type: string
+      nickName:
+        type: string
+      phone:
+        type: string
+      postId:
+        type: integer
+      postIds:
+        items:
+          type: integer
+        type: array
+      remark:
+        type: string
+      roleId:
+        type: integer
+      roleIds:
+        items:
+          type: integer
+        type: array
+      sex:
+        type: integer
+      status:
+        type: integer
+      updateBy:
+        description: 更新者
+        type: integer
+      updatedAt:
+        description: 最后更新时间
+        type: string
+      userId:
+        type: integer
+      username:
+        type: string
+    type: object
+  schema.SysUserDeleteReq:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
+    type: object
+  schema.SysUserGetPageResp:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schema.SysUser'
+        type: array
+      total:
+        type: integer
+    type: object
+  schema.SysUserInsertReq:
+    properties:
+      avatar:
+        type: string
+      createBy:
+        type: integer
+      deptId:
+        type: integer
+      email:
+        type: string
+      nickName:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      postId:
+        type: integer
+      remark:
+        type: string
+      roleId:
+        type: integer
+      sex:
+        type: integer
+      status:
+        default: 2
+        type: integer
+      username:
+        type: string
+    required:
+    - deptId
+    - email
+    - nickName
+    - password
+    - phone
+    - status
+    - username
+    type: object
+  schema.SysUserUpdateReq:
+    properties:
+      avatar:
+        type: string
+      deptId:
+        type: integer
+      email:
+        type: string
+      nickName:
+        type: string
+      phone:
+        type: string
+      postId:
+        type: integer
+      remark:
+        type: string
+      roleId:
+        type: integer
+      sex:
+        type: integer
+      status:
+        type: integer
+      updateBy:
+        type: integer
+      userId:
+        type: integer
+      username:
+        type: string
+    required:
+    - deptId
+    - email
+    - nickName
+    - phone
+    - username
+    type: object
+  schema.UpdateStatusReq:
+    properties:
+      id:
+        description: 角色编码
+        type: integer
+      status:
+        description: 状态
+        type: integer
+      updateBy:
+        description: 更新者
+        type: integer
+    type: object
+  schema.UpdateSysUserStatusReq:
+    properties:
+      status:
+        type: integer
+      updateBy:
+        type: integer
+      userId:
+        type: integer
+    type: object
+host: 127.0.0.1:8000
+info:
+  contact:
+    email: conjurer888888@gmail.com
+    name: conjurer
+    url: https:/github.com/dot123
+  description: This is a game management background. you can use the api key `ApiKeyAuth`
+    to test the authorization filters.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://github.com
+  title: gin-gorm-admin API
+  version: "1.0"
+paths:
+  /dept:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysDeptDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除部门
+      tags:
+      - 部门
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: query
+        name: deptID
+        type: integer
+      - description: 部门名称
+        in: query
+        name: deptName
+        type: string
+      - description: 路径
+        in: query
+        name: deptPath
+        type: string
+      - description: 邮箱
+        in: query
+        name: email
+        type: string
+      - description: 负责人
+        in: query
+        name: leader
+        type: string
+      - description: 上级部门
+        in: query
+        name: parentID
+        type: integer
+      - description: 手机
+        in: query
+        name: phone
+        type: string
+      - description: 排序
+        in: query
+        name: sort
+        type: integer
+      - description: 状态
+        in: query
+        name: status
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/schema.DeptLabel'
+                  type: array
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 分页部门列表数据
+      tags:
+      - 部门
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysDeptInsertReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加部门
+      tags:
+      - 部门
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysDeptUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改部门
+      tags:
+      - 部门
+  /dept/{deptId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: deptId
+        in: path
+        name: deptId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.SysDept'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取部门数据
+      tags:
+      - 部门
+  /deptTree:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: query
+        name: deptID
+        type: integer
+      - description: 部门名称
+        in: query
+        name: deptName
+        type: string
+      - description: 路径
+        in: query
+        name: deptPath
+        type: string
+      - description: 邮箱
+        in: query
+        name: email
+        type: string
+      - description: 负责人
+        in: query
+        name: leader
+        type: string
+      - description: 上级部门
+        in: query
+        name: parentID
+        type: integer
+      - description: 手机
+        in: query
+        name: phone
+        type: string
+      - description: 排序
+        in: query
+        name: sort
+        type: integer
+      - description: 状态
+        in: query
+        name: status
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/schema.DeptLabel'
+                  type: array
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 左侧部门树
+      tags:
+      - 部门
+  /login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.LoginParam'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.LoginTokenInfo'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      summary: 登陆
+      tags:
+      - 认证
+  /logout:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 登出
+      tags:
+      - 认证
+  /menu:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysMenuDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除菜单
+      tags:
+      - 菜单
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: pageNum
+        type: integer
+      - in: query
+        maximum: 100
+        name: pageSize
+        type: integer
+      - description: 菜单名称
+        in: query
+        name: title
+        type: string
+      - description: 显示状态
+        in: query
+        name: visible
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/schema.SysMenu'
+                  type: array
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: Menu列表数据
+      tags:
+      - 菜单
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysMenuInsertReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建菜单
+      tags:
+      - 菜单
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysMenuUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改菜单
+      tags:
+      - 菜单
+  /menu/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: path
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.SysMenu'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: Menu详情数据
+      tags:
+      - 菜单
+  /menurole:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/schema.SysMenu'
+                  type: array
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 根据登录角色名称获取菜单列表数据（左菜单使用）
+      tags:
+      - 菜单
+  /monitor/index:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/monitor.Server'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取服务器状态
+      tags:
+      - 服务器状态
+  /msg/notice:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: pageNum
+        type: integer
+      - in: query
+        maximum: 100
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.NoticeGetPageResp'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取公告列表
+      tags:
+      - 公告管理
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.NoticeCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 新建公告
+      tags:
+      - 公告管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.NoticeUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新公告
+      tags:
+      - 公告管理
+  /msg/notice/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 公告id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除公告
+      tags:
+      - 公告管理
+  /post:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysPostDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除岗位
+      tags:
+      - 岗位
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: pageNum
+        type: integer
+      - in: query
+        maximum: 100
+        name: pageSize
+        type: integer
+      - description: 编码
+        in: query
+        name: postCode
+        type: string
+      - description: id
+        in: query
+        name: postID
+        type: integer
+      - description: 名称
+        in: query
+        name: postName
+        type: string
+      - description: 备注
+        in: query
+        name: remark
+        type: string
+      - description: 排序
+        in: query
+        name: sort
+        type: integer
+      - description: 状态
+        in: query
+        name: status
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.SysPostPageResp'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 岗位列表数据
+      tags:
+      - 岗位
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysPostInsertReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加岗位
+      tags:
+      - 岗位
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysPostUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改岗位
+      tags:
+      - 岗位
+  /post/{postId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 编码
+        in: path
+        name: postId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.SysPost'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取岗位信息
+      tags:
+      - 岗位
+  /public/uploadFile:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      summary: 上传文件
+      tags:
+      - 文件管理
+  /refresh_token:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.LoginTokenInfo'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 刷新token
+      tags:
+      - 认证
+  /role:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 1不是管理员 2是管理员
+        in: query
+        name: admin
+        type: integer
+      - in: query
+        name: dataScope
+        type: string
+      - description: 标记
+        in: query
+        name: flag
+        type: string
+      - in: query
+        name: pageNum
+        type: integer
+      - in: query
+        maximum: 100
+        name: pageSize
+        type: integer
+      - description: 备注
+        in: query
+        name: remark
+        type: string
+      - description: 角色编码
+        in: query
+        name: roleID
+        type: integer
+      - description: 角色代码
+        in: query
+        name: roleKey
+        type: string
+      - description: 角色名称
+        in: query
+        name: roleName
+        type: string
+      - description: 角色排序
+        in: query
+        name: roleSort
+        type: integer
+      - description: 状态
+        in: query
+        name: status
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.SysRoleGetPageResp'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 角色列表数据
+      tags:
+      - 角色/Role
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysRoleInsertReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建角色
+      tags:
+      - 角色/Role
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysRoleUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改用户角色
+      tags:
+      - 角色/Role
+  /role-datascope:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.RoleDataScopeReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新角色数据权限
+      tags:
+      - 角色/Role
+  /role-status:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.UpdateStatusReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改用户角色状态
+      tags:
+      - 角色/Role
+  /role/{roleId}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: roleId
+        in: path
+        name: roleId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除用户角色
+      tags:
+      - 角色/Role
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: roleId
+        in: path
+        name: roleId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.SysRole'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取Role数据
+      tags:
+      - 角色/Role
+  /roleDeptTreeselect/{roleId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: roleId
+        in: path
+        name: roleId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.GetDeptTreeRoleSelectResp'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 部门树形
+      tags:
+      - 部门
+  /roleMenuTreeselect/{roleId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: roleId
+        in: path
+        name: roleId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.GetMenuTreeSelectResp'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 根据角色ID查询菜单下拉树结构
+      tags:
+      - 菜单
+  /sys-api:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysApiDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除接口管理
+      tags:
+      - 接口管理
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: action
+        type: string
+      - in: query
+        name: createdAtOrder
+        type: string
+      - in: query
+        name: pageNum
+        type: integer
+      - in: query
+        maximum: 100
+        name: pageSize
+        type: integer
+      - in: query
+        name: parentId
+        type: string
+      - in: query
+        name: path
+        type: string
+      - in: query
+        name: pathOrder
+        type: string
+      - in: query
+        name: title
+        type: string
+      - in: query
+        name: titleOrder
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.SysApiGetPageResp'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取接口管理列表
+      tags:
+      - 接口管理
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysApiUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改接口管理
+      tags:
+      - 接口管理
+  /sys-api/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.SysApi'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取接口管理
+      tags:
+      - 接口管理
+  /sys-user:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysUserDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除用户数据
+      tags:
+      - 用户
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: createdAtOrder
+        type: string
+      - in: query
+        name: deptId
+        type: integer
+      - in: query
+        name: email
+        type: string
+      - in: query
+        name: nickName
+        type: string
+      - in: query
+        name: pageNum
+        type: integer
+      - in: query
+        maximum: 100
+        name: pageSize
+        type: integer
+      - in: query
+        name: phone
+        type: string
+      - in: query
+        name: postID
+        type: integer
+      - in: query
+        name: roleID
+        type: integer
+      - in: query
+        name: sex
+        type: integer
+      - in: query
+        name: status
+        type: integer
+      - in: query
+        name: statusOrder
+        type: string
+      - in: query
+        name: userID
+        type: integer
+      - in: query
+        name: userIdOrder
+        type: string
+      - in: query
+        name: username
+        type: string
+      - in: query
+        name: usernameOrder
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.SysUserGetPageResp'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 列表用户信息数据
+      tags:
+      - 用户
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysUserInsertReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建用户
+      tags:
+      - 用户
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 请求参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysUserUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改用户数据
+      tags:
+      - 用户
+  /sys-user/{userId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: userId
+        in: path
+        name: userId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.SysUser'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取用户
+      tags:
+      - 用户
+  /user/avatar:
+    post:
+      consumes:
+      - application/json
+      - multipart/form-data
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改头像
+      tags:
+      - 个人中心
+  /user/getinfo:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取个人信息
+      tags:
+      - 个人中心
+  /user/profile/{userId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: userId
+        in: path
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginx.ResponseData'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.GetProfileResp'
+              type: object
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取个人中心用户
+      tags:
+      - 个人中心
+  /user/pwd/reset:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.ResetSysUserPwdReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 重置用户密码
+      tags:
+      - 用户
+  /user/pwd/set:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.PassWord'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改密码
+      tags:
+      - 用户
+  /user/status:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.UpdateSysUserStatusReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseData'
+        "500":
+          description: 失败结果
+          schema:
+            $ref: '#/definitions/ginx.ResponseFail'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改用户状态
+      tags:
+      - 个人中心
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
