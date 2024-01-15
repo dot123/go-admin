@@ -62,7 +62,6 @@ type Config struct {
 	HTTP        HTTP
 	Casbin      Casbin
 	Log         Log
-	LogGormHook LogGormHook
 	JWTAuth     JWTAuth
 	Monitor     Monitor
 	RateLimiter RateLimiter
@@ -94,21 +93,8 @@ type Log struct {
 	Format        string
 	Output        string
 	OutputFile    string
-	EnableHook    bool
-	HookLevels    []string
-	Hook          LogHook
-	HookMaxThread int
-	HookMaxBuffer int
 	RotationCount int
 	RotationTime  int
-}
-
-type LogGormHook struct {
-	DBType       string
-	MaxLifetime  time.Duration
-	MaxOpenConns int
-	MaxIdleConns int
-	Table        string
 }
 
 type JWTAuth struct {

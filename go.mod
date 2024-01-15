@@ -3,7 +3,6 @@ module github.com/dot123/gin-gorm-admin
 go 1.18
 
 require (
-	github.com/LyricTian/queue v1.3.0
 	github.com/bitly/go-simplejson v0.5.0
 	github.com/casbin/casbin/v2 v2.52.2
 	github.com/casbin/gorm-adapter/v3 v3.10.0
@@ -18,6 +17,7 @@ require (
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/golang-jwt/jwt/v4 v4.4.2
 	github.com/google/gops v0.3.25
+	github.com/google/uuid v1.3.0
 	github.com/google/wire v0.5.0
 	github.com/jinzhu/copier v0.3.5
 	github.com/koding/multiconfig v0.0.0-20171124222453-69c27309b2d7
@@ -62,7 +62,6 @@ require (
 	github.com/golang-sql/civil v0.0.0-20220223132316-b832511892a9 // indirect
 	github.com/golang-sql/sqlexp v0.0.0-20170517235910-f1bb20e5a188 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
-	github.com/google/uuid v1.3.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.11.0 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
